@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OsuSharp.Converters;
 using OsuSharp.Enums;
 
 namespace OsuSharp.Models.Users;
@@ -57,6 +58,7 @@ public class UserStatistics
   /// The amount of times the user achieved the XH, X, SH, S and A grades.
   /// </summary>
   [JsonProperty("grade_counts")]
+  [JsonConverter(typeof(GradeConverter))]
   public Dictionary<Grade, int> Grades { get; private set; } = default!;
 
   /// <summary>
@@ -117,4 +119,10 @@ public class UserStatistics
   /// </summary>
   [JsonProperty("total_score")]
   public long TotalScore { get; private set; }
+
+  /// <summary>
+  /// The user associated with these statistics. This will be null if this object has been requested through a user object.
+  /// </summary>
+  [JsonProperty("user")]
+  public User? User { get; private set; }
 }
