@@ -5,6 +5,7 @@ using OsuSharp.Models;
 using System.ComponentModel;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Reflection;
 using System.Web;
 
@@ -116,8 +117,15 @@ public partial class OsuApiClient
 
     try
     {
+      // Prepare HTTP request
+      var message = new HttpRequestMessage(method ?? HttpMethod.Get, method == HttpMethod.Get ? $"{url}?{BuildQueryString(parameters)}" : url);
+
+      // Append POST body if required
+      if (method == HttpMethod.Post)
+        message.Content = JsonContent.Create(parameters);
+
       // Send the request and validate the response. If 404 is returned, return null.
-      HttpResponseMessage response = await _http.SendAsync(new HttpRequestMessage(method ?? HttpMethod.Get, $"{url}?{BuildQueryString(parameters)}"));
+      HttpResponseMessage response = await _http.SendAsync(message);
       if (response.StatusCode == HttpStatusCode.NotFound)
         return default;
 

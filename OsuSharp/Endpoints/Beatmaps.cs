@@ -155,10 +155,16 @@ public partial class OsuApiClient
   /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap"/>
   /// </summary>
   /// <param name="id">The ID of the beatmap.</param>
+  /// <param name="mods">The mods to get the attributes from.</param>
+  /// <param name="ruleset">The ruleset to get the attributes from.</param>
   /// <returns>The difficulty attributes or null, if the beatmap was not found.</returns>
-  public async Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id)
+  public async Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id, string? mods = null, string? ruleset = null)
   {
     // Send the request and return the difficulty attributes object.
-    return await GetFromJsonAsync<DifficultyAttributes>($"beatmaps/{id}/attributes", jsonSelector: x => x["attributes"], method: HttpMethod.Post);
+    return await GetFromJsonAsync<DifficultyAttributes>($"beatmaps/{id}/attributes", new Dictionary<string, object?>()
+    {
+      { "mods", mods },
+      { "ruleset", ruleset }
+    }, x => x["attributes"], method: HttpMethod.Post);
   }
 }
