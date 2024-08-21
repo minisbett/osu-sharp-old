@@ -20,7 +20,7 @@ public class DifficultyAttributes
   /// The difficulty rating of the beatmap.
   /// </summary>
   [JsonProperty("star_rating")]
-  public float StarRating { get; private set; }
+  public float DifficultyRating { get; private set; }
 
   /// <summary>
   /// The aim difficulty rating of the beatmap. This property may be null as it is exclusive to osu!standard beatmaps.
