@@ -155,16 +155,54 @@ public partial class OsuApiClient
   /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap"/>
   /// </summary>
   /// <param name="id">The ID of the beatmap.</param>
-  /// <param name="mods">The mods to get the attributes from.</param>
   /// <param name="ruleset">The ruleset to get the attributes from.</param>
   /// <returns>The difficulty attributes or null, if the beatmap was not found.</returns>
-  public async Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id, string? mods = null, string? ruleset = null)
+  public Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id, string? ruleset = null) => GetDifficultyAttributesInternalAsync(id, null, ruleset);
+
+  /// <summary>
+  /// Gets the beatmap with the specified ID.
+  /// If the beatmap was not found, null is returned.
+  /// <br/><br/>
+  /// API notes:<br/>
+  /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap"/>
+  /// </summary>
+  /// <param name="id">The ID of the beatmap.</param>
+  /// <param name="mods">The mods in the acronym form to get the attributes from.</param>
+  /// <param name="ruleset">The ruleset to get the attributes from.</param>
+  /// <returns>The difficulty attributes or null, if the beatmap was not found.</returns>
+  public Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id, string[] mods, string? ruleset = null) => GetDifficultyAttributesInternalAsync(id, mods, ruleset);
+
+  /// <summary>
+  /// Gets the beatmap with the specified ID.
+  /// If the beatmap was not found, null is returned.
+  /// <br/><br/>
+  /// API notes:<br/>
+  /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap"/>
+  /// </summary>
+  /// <param name="id">The ID of the beatmap.</param>
+  /// <param name="mods">The mods in a bitset form to get the attributes from.</param>
+  /// <param name="ruleset">The ruleset to get the attributes from.</param>
+  /// <returns>The difficulty attributes or null, if the beatmap was not found.</returns>
+  public Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id, int mods, string? ruleset = null) => GetDifficultyAttributesInternalAsync(id, mods, ruleset);
+
+  /// <summary>
+  /// Gets the beatmap with the specified ID.
+  /// If the beatmap was not found, null is returned.
+  /// <br/><br/>
+  /// API notes:<br/>
+  /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap"/>
+  /// </summary>
+  /// <param name="id">The ID of the beatmap.</param>
+  /// <param name="mods">The mods in either a bitset of mods or a string array with the mods.</param>
+  /// <param name="ruleset">The ruleset to get the attributes from.</param>
+  /// <returns>The difficulty attributes or null, if the beatmap was not found.</returns>
+  private async Task<DifficultyAttributes?> GetDifficultyAttributesInternalAsync(int id, object? mods = null, string? ruleset = null)
   {
     // Send the request and return the difficulty attributes object.
     return await GetFromJsonAsync<DifficultyAttributes>($"beatmaps/{id}/attributes", new Dictionary<string, object?>()
     {
-      { "mods", mods },
-      { "ruleset", ruleset }
+      { "ruleset", ruleset },
+      { "mods", mods }
     }, x => x["attributes"], method: HttpMethod.Post);
   }
 }

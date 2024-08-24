@@ -117,8 +117,11 @@ public partial class OsuApiClient
 
     try
     {
+      // Fallback to GET if nothing else is provided
+      method ??= HttpMethod.Get;
+
       // Prepare HTTP request
-      var message = new HttpRequestMessage(method ?? HttpMethod.Get, method == HttpMethod.Get ? $"{url}?{BuildQueryString(parameters)}" : url);
+      var message = new HttpRequestMessage(method, method == HttpMethod.Get ? $"{url}?{BuildQueryString(parameters)}" : url);
 
       // Append POST body if required
       if (method == HttpMethod.Post)
