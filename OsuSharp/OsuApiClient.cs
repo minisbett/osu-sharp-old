@@ -176,9 +176,9 @@ public partial class OsuApiClient
       else if (kvp.Value is DateTime dt)
         // Use the ISO 8601 format for dates.
         str += dt.ToString("o");
-      else if (kvp.Value is bool boolean)
-        // The API is case-sensitive for booleans
-        str += boolean.ToString().ToLower();
+      else if (kvp.Value is bool b)
+        // Ensure all bools are passed in lower-case.
+        str += b.ToString().ToLower();
       else
         str += HttpUtility.HtmlEncode(kvp.Value!.ToString());
     }
