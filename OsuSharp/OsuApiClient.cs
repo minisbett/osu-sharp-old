@@ -124,7 +124,7 @@ public partial class OsuApiClient
 
       // Append POST body if required
       if (method == HttpMethod.Post)
-        message.Content = new StringContent(JsonConvert.SerializeObject(parameters, _jsonSettings), System.Text.Encoding.UTF8, "application/json");
+        message.Content = new StringContent(JsonConvert.SerializeObject(parameters, _jsonSettings), System.Text.Encoding.Default, "application/json");
 
       // Send the request and validate the response. If 404 is returned, return null.
       HttpResponseMessage response = await _http.SendAsync(message);

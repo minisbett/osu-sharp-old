@@ -155,7 +155,7 @@ public partial class OsuApiClient
   /// <a href="https://osu.ppy.sh/docs/index.html#get-beatmap"/>
   /// </summary>
   /// <param name="id">The ID of the beatmap.</param>
-  /// <param name="ruleset">The ruleset to get the attributes from.</param>
+  /// <param name="ruleset">Optional. The ruleset to get the attributes from. Default to osu!standard.</param>
   /// <returns>The difficulty attributes or null, if the beatmap was not found.</returns>
   public Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id, Ruleset ruleset = Ruleset.Osu) => GetDifficultyAttributesInternalAsync(id, 0, ruleset);
 
@@ -183,7 +183,7 @@ public partial class OsuApiClient
   /// <param name="mods">Optional. The mods to consider for the attributes, as a string with the acronyms, such as "HDHR".</param>
   /// <param name="ruleset">Optional. The ruleset to get the attributes from. Defaults to osu!standard.</param>
   /// <returns>The difficulty attributes or null, if the beatmap was not found.</returns>
-  public Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id, string mods, Ruleset ruleset = Ruleset.Osu) => GetDifficultyAttributesInternalAsync(id, mods.Chunk(2).Select(chunk => new string(chunk)).ToArray(), ruleset);
+  public Task<DifficultyAttributes?> GetDifficultyAttributesAsync(int id, string mods, Ruleset ruleset = Ruleset.Osu) => GetDifficultyAttributesInternalAsync(id, mods.Chunk(2).Select(x => new string(x)).ToArray(), ruleset);
 
   /// <summary>
   /// Gets the difficulty attributes of the beatmap with the specified ID, optionally in the specified ruleset and the specified mods.

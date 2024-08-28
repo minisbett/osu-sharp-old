@@ -61,8 +61,6 @@ internal class StringEnumConverter : JsonConverter
       writer.WriteValue(descriptionAttribute.Description);
     }
     else
-    {
       throw new JsonSerializationException($"{value?.GetType()} is not an enum value or array.");
-    }
   }
 }
