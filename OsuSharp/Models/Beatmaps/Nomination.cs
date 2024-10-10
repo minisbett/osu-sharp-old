@@ -22,7 +22,6 @@ public class Nomination
   /// The rulesets in which this nomination is valid.
   /// </summary>
   [JsonProperty("rulesets")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public Ruleset[] Rulesets { get; private set; } = default!;
 
   /// <summary>

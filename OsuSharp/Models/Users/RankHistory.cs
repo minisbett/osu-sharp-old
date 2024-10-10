@@ -22,6 +22,5 @@ public class RankHistory
   /// The ruleset this rank history is for.
   /// </summary>
   [JsonProperty("mode")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public Ruleset Ruleset { get; private set; }
 }

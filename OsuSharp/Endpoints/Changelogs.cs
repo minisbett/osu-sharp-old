@@ -29,8 +29,8 @@ public partial class OsuApiClient
   /// <br/><br/>
   /// API notes:<br/>
   /// The amount of builds returned is always limited to 21 and sorted by most recent, regardless of the filters.<br/>
-  /// <see cref="ChangelogListing.Streams"/> always contains all available streams, including <see cref="UpdateStream.LatestBuild"/> and <see cref="UpdateStream.UserCount"/>.<br/>
-  /// <see cref="ChangelogListing.Builds"/> includes <see cref="Build.Changelog"/> (including <see cref="ChangelogEntry.GitHubUser"/>) and <see cref="Build.Versions"/>.<br/>
+  /// <see cref="ChangelogListing.Streams"/> contains all available streams, including <see cref="UpdateStream.LatestBuild"/> and <see cref="UpdateStream.UserCount"/>.<br/>
+  /// <see cref="ChangelogListing.Builds"/> includes <see cref="Build.Changelog"/> (including <see cref="ChangelogEntry.GitHubUser"/>).<br/>
   /// <a href="https://osu.ppy.sh/docs/index.html#get-changelog-listing"/>
   /// </summary>
   /// <param name="stream">Optional. The name of the update stream to exclusively return builds from (e.g. "stable40").</param>

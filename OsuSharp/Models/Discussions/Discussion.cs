@@ -79,7 +79,6 @@ public class Discussion
   /// The type of this discussion.
   /// </summary>
   [JsonProperty("message_type")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public DiscussionType Type { get; private set; }
 
   /// <summary>

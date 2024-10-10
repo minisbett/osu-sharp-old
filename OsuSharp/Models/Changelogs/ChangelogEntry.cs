@@ -17,7 +17,6 @@ public class ChangelogEntry
   /// The category of the changelog entry, describing the area of change.
   /// </summary>
   [JsonProperty("category")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public ChangelogEntryCategory Category { get; private set; }
 
   /// <summary>
@@ -66,7 +65,6 @@ public class ChangelogEntry
   /// The type of change made (e.g. added, fixed). This may be null.
   /// </summary>
   [JsonProperty("type")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public ChangelogEntryType Type { get; private set; }
 
   /// <summary>

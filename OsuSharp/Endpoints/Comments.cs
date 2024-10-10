@@ -37,8 +37,8 @@ public partial class OsuApiClient
   /// <param name="parentId">The ID of the parent comment, returning it's replies.</param>
   /// <param name="sort">The sorting for the returned comments.</param>
   /// <returns>An asynchronous enumerable for lazily enumerating over the comment bundles.</returns>
-  public async IAsyncEnumerable<CommentBundle> GetCommentsAsync(int? after = null, CommentableType? type = null, int? commentableId = null, int? parentId = null,
-                                                                CommentSortType? sort = null)
+  public async IAsyncEnumerable<CommentBundle> GetCommentsAsync(int? after = null, CommentableType? type = null, int? commentableId = null,
+                                                                int? parentId = null, CommentSortType? sort = null)
   {
     // Always remember the cursor for the next request.
     Cursor? cursor = null;
@@ -47,7 +47,7 @@ public partial class OsuApiClient
     do
     {
       // Send the request.
-      CommentBundle? bundle = await GetFromJsonAsync<CommentBundle>($"comments", new Dictionary<string, object?>()
+      CommentBundle bundle = await GetFromJsonAsync<CommentBundle>($"comments", new Dictionary<string, object?>()
       {
         { "cursor[id]", cursor?.Id },
         { "cursor[created_at]", cursor?.CreatedAt },
@@ -56,11 +56,7 @@ public partial class OsuApiClient
         { "commentable_id", commentableId },
         { "parent_id", parentId },
         { "sort", sort }
-      });
-
-      // Validate the response and throw an exception if the bundle is null.
-      if (bundle is null)
-        throw new OsuApiException("An error occured while requesting the comment bundle. (bundle is null)");
+      }) ?? throw new OsuApiException("An error occured while requesting the comment bundle. (bundle is null)");
 
       // Yield return the bundle and update the cursor for the next request.
       yield return bundle;

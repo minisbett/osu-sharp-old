@@ -56,10 +56,10 @@ public class UserStatistics
 
   /// <summary>
   /// The amount of times the user achieved the XH, X, SH, S and A grades.
+  /// TODO: ADD THIS BACK
   /// </summary>
-  [JsonProperty("grade_counts")]
-  [JsonConverter(typeof(GradeConverter))]
-  public Dictionary<Grade, int> Grades { get; private set; } = default!;
+  //[JsonProperty("grade_counts")]
+  //public Dictionary<Grade, int> Grades { get; private set; } = default!;
 
   /// <summary>
   /// The overall accuracy of the user.

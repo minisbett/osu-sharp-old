@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OsuSharp.Converters;
 using OsuSharp.Models;
 using System.ComponentModel;
 using System.Net;
@@ -15,9 +16,18 @@ namespace OsuSharp;
 public partial class OsuApiClient
 {
   /// <summary>
+  /// The JSON serializer settings used by the API client.
+  /// </summary>
+  private readonly JsonSerializerSettings _jsonSettings = new()
+  {
+    // The StringArrayConverter is referenced on specific properties instead as not all string[] are parsed this way.
+    Converters = new JsonConverter[] { new EventConverter(),  new GradeConverter(), new StringEnumConverter(), new Converters.TimeSpanConverter() }
+  };
+
+  /// <summary>
   /// The authorization body used to authenticate to the osu! API v2.
   /// </summary>
-  private readonly Dictionary<string, string> _authorizationBody = new Dictionary<string, string>()
+  private readonly Dictionary<string, string> _authorizationBody = new()
   {
     { "client_id", "" },
     { "client_secret", "" },
@@ -28,7 +38,7 @@ public partial class OsuApiClient
   /// <summary>
   /// The HTTP client used to make requests to the osu! API v2.
   /// </summary>
-  private readonly HttpClient _http = new HttpClient()
+  private readonly HttpClient _http = new()
   {
     BaseAddress = new Uri("https://osu.ppy.sh/api/v2/")
   };
@@ -71,12 +81,10 @@ public partial class OsuApiClient
     {
       // Request a new access token and parses the JSON in the response into a response object.
       var response = await _http.PostAsync("https://osu.ppy.sh/oauth/token", new FormUrlEncodedContent(_authorizationBody));
-      string json = await response.Content.ReadAsStringAsync();
-      AccessTokenResponse? apResponse = JsonConvert.DeserializeObject<AccessTokenResponse>(json);
+      AccessTokenResponse? apResponse = JsonConvert.DeserializeObject<AccessTokenResponse>(await response.Content.ReadAsStringAsync())
+        ?? throw new OsuApiException("An error occured while requesting a new access token. (response is null)");
 
       // Validate the parsed JSON object.
-      if (apResponse is null)
-        throw new OsuApiException("An error occured while requesting a new access token. (response is null)");
       if (apResponse.AccessToken is null || apResponse.ExpiresIn is null) // Error fields are most likely specified
         throw new OsuApiException($"An error occured while requesting a new access token: {apResponse.ErrorDescription} ({apResponse.ErrorCode}).");
 
@@ -88,14 +96,15 @@ public partial class OsuApiClient
   }
 
   /// <summary>
-  /// Sends a GET request to the specified URL and parses the JSON in the response into the specified type.
+  /// Sends a GET request to the specified URL and parses the JSON in the response into the specified type.<br/>
+  /// If the requested resource could not be found, null is returned. If the request fails otherwise, an <see cref="OsuApiException"/> is thrown.<br/>
   /// </summary>
   /// <typeparam name="T">The type to parse the JSON in the response into.</typeparam>
   /// <param name="url">The request URL.</param>
   /// <param name="parameters">Optional. The query parameters of the URL. All parameters with a null value are ignored.</param>
   /// <param name="jsonSelector">Optional. A selector for the base JSON, allowing to parse a sub-property of the JSON object.</param>
   /// <param name="method">Optional. The HTTP Method used. This defaults to GET, and only exists for niche API inconsistencies.</param>
-  /// <returns>The parsed response.</returns>
+  /// <returns>The parsed response or null, if the requested resource could not be found.</returns>
   private async Task<T?> GetFromJsonAsync<T>(string url, Dictionary<string, object?>? parameters = null, Func<JObject, JToken?>? jsonSelector = null,
                                              HttpMethod? method = null)
   {
@@ -126,7 +135,8 @@ public partial class OsuApiClient
       }
 
       // Parse the JSON in the response into the specified type and return it.
-      return JsonConvert.DeserializeObject<T?>(await response.Content.ReadAsStringAsync());
+      string s = await response.Content.ReadAsStringAsync();
+      return JsonConvert.DeserializeObject<T?>(s, _jsonSettings);
     }
     catch (Exception ex)
     {
@@ -139,7 +149,7 @@ public partial class OsuApiClient
   /// </summary>
   /// <param name="parameters">The parameters.</param>
   /// <returns>The query parameter string.</returns>
-  private string BuildQueryString(Dictionary<string, object?> parameters)
+  private static string BuildQueryString(Dictionary<string, object?> parameters)
   {
     string str = "";
 
@@ -150,11 +160,8 @@ public partial class OsuApiClient
 
       // Handle the value->string parsing based on it's type.
       if (kvp.Value is Enum e)
-      {
         // If the enum has a description attribute, use it. Otherwise, use the enum value.
-        DescriptionAttribute? attr = e.GetType().GetField(e.ToString())!.GetCustomAttribute<DescriptionAttribute>();
-        str += attr?.Description ?? e.ToString();
-      }
+        str += e.GetType().GetField(e.ToString())!.GetCustomAttribute<DescriptionAttribute>()?.Description ?? e.ToString();
       else if (kvp.Value is DateTime dt)
         // Use the ISO 8601 format for dates.
         str += dt.ToString("o");

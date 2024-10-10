@@ -32,6 +32,7 @@ public class BeatmapSet
   /// <summary>
   /// The URLs for the cover texture assets of this beatmapset.
   /// </summary>
+  [JsonProperty("covers")]
   public BeatmapSetCovers Covers { get; private set; } = default!;
 
   /// <summary>

@@ -52,6 +52,5 @@ public class AccountHistoryEntry
   /// The type of this history entry.
   /// </summary>
   [JsonProperty("type")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public UserAccountHistoryEntryType Type { get; private set; }
 }

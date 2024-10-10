@@ -22,7 +22,7 @@ public class UpdateStream
   /// The ID of this update stream.
   /// </summary>
   [JsonProperty("id")]
-  public int ID { get; private set; }
+  public int Id { get; private set; }
 
   /// <summary>
   /// TODO: what does featured mean?

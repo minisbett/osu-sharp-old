@@ -23,7 +23,6 @@ public class Comment
   /// The type of object this comment is attached to.
   /// </summary>
   [JsonProperty("commentable_type")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public CommentableType CommentableType { get; private set; }
 
   /// <summary>

@@ -22,7 +22,6 @@ public class WikiPage
   /// The layout type of this wiki page.
   /// </summary>
   [JsonProperty("layout")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public WikiPageLayout Layout { get; private set; } = default!;
 
   /// <summary>

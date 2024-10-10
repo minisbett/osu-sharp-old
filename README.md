@@ -6,7 +6,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/minisbett/osu-sharp?color=ff87c6)](https://github.com/minisbett/osu-sharp/releases/latest)
 
 A comprehensive, well documented API wrapper for the public scope of the osu! API v2.<br/>
-This wrapper <ins>currently only supports client credential authentication</ins>.<br/>
+This wrapper <ins>currently only supports client credential authorization</ins>.<br/>
 
 [Getting Started](#getting-started) • [Endpoints](#features)<br/>
 </div>
@@ -20,14 +20,14 @@ This wrapper <ins>currently only supports client credential authentication</ins>
 The methods for accessing the API can be found in the `OsuApiClient` class. When creating an instance, you will need to specify the client ID and client secret, as found in your [osu! settings](https://osu.ppy.sh/home/account/edit#oauth).  
 Authorization using an OAuth flow or user credentials is not supported *yet*, but is planned for the future.  
 
-Below, you can find a simple example on how to authenticate using client credentials and request info about a beatmapset.
+Below, you can find a simple example on how to authorize using client credentials and request info about a beatmapset.
 ```cs
 // Create the client.
 OsuApiClient client = new OsuApiClient(clientId, clientSecret);
 
 // Optional. Requests an access token using the specified client credentials.
 // This action is automatically performed whenever calling an API endpoint.
-client.EnsureAccessToken();
+await client.EnsureAccessTokenAsync();
 
 // Get Sotarks' Harumachi Clover.
 BeatmapSetExtended? set = await client.GetBeatmapSetAsync(842412);
@@ -37,7 +37,7 @@ Every model and every endpoint method is well documented, containing both refere
 
 ## Asynchronous Enumerables for pagination
 
-For API endpoints that have pagination, osu-sharp provides an `IAsyncEnumerable` allowing you to treat the data received from the endpoint as an enumerable. It automatically performs further pagination requests as necessary, making working with it very easy and straight-forward. Below, you can find an example.
+For API endpoints that have cursor-based pagination (as opposed to being able to specify a page), osu-sharp provides an `IAsyncEnumerable` allowing you to treat the data received from the endpoint as an enumerable. It automatically performs further pagination requests as necessary, making working with it very easy and straight-forward. Below, you can find an example.
 ```cs
 // Create the client.
 OsuApiClient client = new OsuApiClient(clientId, clientSecret);
@@ -52,9 +52,9 @@ await foreach (BeatmapPack pack in packs)
 
 ## Normal & Extended models
 
-The osu! API splits it's models for beatmaps, beatmapsets and users, the normal size (`Beatmap`, `BeatmapSet`, `User`), and their extended version, containing more fields with information (`BeatmapExtended`, `BeatmapSetExtended`, `UserExtended`). It is advised to utilize the API documentation when using the API wrapper, to make sure you get the necessary information you require.
+The osu! API v2 splits it's models for beatmaps, beatmapsets and users into two sizes: the normal size (`Beatmap`, `BeatmapSet`, `User`), and their extended version, containing more fields with information (`BeatmapExtended`, `BeatmapSetExtended`, `UserExtended`). It is advised to utilize the API documentation when using the API wrapper, to make sure you get the necessary information you require.
 
-Below, you can find the API documentation for each model:  
+Below, you can find the osu! API v2 documentation for each model:  
 [Beatmap](https://osu.ppy.sh/docs/index.html#beatmap) • [BeatmapExtended](https://osu.ppy.sh/docs/index.html#beatmapextended)  
 [BeatmapSet](https://osu.ppy.sh/docs/index.html#beatmapset) • [BeatmapSetExtended](https://osu.ppy.sh/docs/index.html#beatmapsetextended)  
 [User](https://osu.ppy.sh/docs/index.html#user) • [UserExtended](https://osu.ppy.sh/docs/index.html#userextended)
@@ -89,8 +89,8 @@ Comments (100% 2/2)
   [✓] /comments
   [✓] /comments/{comment}
 
-Events (0% 0/1)
-  [ ] /events
+Events (100% 1/1)
+  [✓] /events
 
 Home (0% 0/1)
   [ ] /search
@@ -98,23 +98,26 @@ Home (0% 0/1)
 Multiplayer (0% 0/1)
   [ ] /rooms/{room}/playlist/{playlist}/scores
 
-News (0% 0/2)
-  [ ] /news
-  [ ] /news/{news}
+News (100% 2/2)
+  [✓] /news
+  [✓] /news/{news}
 
-Ranking (0% 0/3)
-  [ ] /rankings/kudosu
+Ranking (33% 1/3)
+  [✓] /rankings/kudosu
   [ ] /rankings/{mode}/{type}
   [ ] /spotlights
 
-Users (0% 0/6)
-  [ ] /users
-  [ ] /users/{user}/{mode?}
-  [ ] /users/{user}/kudosu
-  [ ] /users/{user}/scores/{type}
-  [ ] /users/{user}/beatmapsets/{type}
-  [ ] /users/{user}/recent_activity
+Users (100% 6/6)
+  [✓] /users
+  [✓] /users/{user}/{mode?}
+  [✓] /users/{user}/kudosu
+  [✓] /users/{user}/scores/{type}
+  [✓] /users/{user}/beatmapsets/{type}
+  [✓] /users/{user}/recent_activity
 
-Wiki (0% 0/1)
+Wiki (100% 1/1)
   [✓] /wiki/{locale}/{path}
+
+Undocumented (0% 0/?)
+  To be added
 ```

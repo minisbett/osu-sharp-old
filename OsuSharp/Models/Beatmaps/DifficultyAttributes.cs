@@ -19,7 +19,7 @@ public class DifficultyAttributes
   /// <summary>
   /// The difficulty rating of the beatmap.
   /// </summary>
-  [JsonProperty("difficulty_rating")]
+  [JsonProperty("star_rating")]
   public float DifficultyRating { get; private set; }
 
   /// <summary>

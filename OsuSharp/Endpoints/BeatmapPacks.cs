@@ -11,7 +11,6 @@ public partial class OsuApiClient
   /// <summary>
   /// Returns an asynchronous enumerable for all beatmap packs with the specified type, allowing to lazily
   /// enumerate through all beatmap packs, performing further pagination requests as necessary.<br/>
-  /// If a pagination request failed, an <see cref="OsuApiException"/> is thrown.
   /// <br/><br/>
   /// API notes:<br/>
   /// This endpoint does not provide support for targetting a specific page directly per API design.<br/>
@@ -35,7 +34,7 @@ public partial class OsuApiClient
 
       // Update the cursor for the next request and yield return the beatmap packs.
       cursor = obj!.cursor_string.Value;
-      foreach (BeatmapPack pack in JsonConvert.DeserializeObject<BeatmapPack[]>(obj!.beatmap_packs.ToString()))
+      foreach (BeatmapPack pack in JsonConvert.DeserializeObject<BeatmapPack[]>(obj!.beatmap_packs.ToString(), _jsonSettings))
         yield return pack;
     }
     while (cursor is not null);

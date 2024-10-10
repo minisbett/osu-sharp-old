@@ -8,52 +8,33 @@ namespace OsuSharp.Converters;
 /// </summary>
 internal class GradeConverter : JsonConverter
 {
-  public override bool CanConvert(Type objectType)
-  {
-    // Only allow string arrays to be converted.
-    return objectType.Equals(typeof(string));
-  }
+  public override bool CanWrite => false;
+
+  public override bool CanConvert(Type objectType) => objectType == typeof(Grade);
 
   public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
   {
-    // If the value is a string and not null, convert it into a string array.
+    // If the value is a string and not null, parse it as a grade and return it.
     if (reader.TokenType == JsonToken.String && reader.Value is not null)
-      switch (reader.Value.ToString())
+      return reader.Value.ToString() switch
       {
-        case "XH":
-        case "SSH":
-          return Grade.XH;
-        case "SH":
-          return Grade.SH;
-        case "X":
-        case "SS":
-          return Grade.X;
-        case "S":
-          return Grade.S;
-        case "A":
-          return Grade.A;
-        case "B":
-          return Grade.B;
-        case "C":
-          return Grade.C;
-        case "D":
-          return Grade.D;
-        default:
-          throw new JsonSerializationException($"Unable to convert '{reader.Value}' into a grade.");
-      }
+        "XH" or "SSH" => Grade.XH,
+        "SH" => Grade.SH,
+        "X" or "SS" => Grade.X,
+        "S" => Grade.S,
+        "A" => Grade.A,
+        "B" => Grade.B,
+        "C" => Grade.C,
+        "D" => Grade.D,
+        _ => throw new JsonSerializationException($"Unable to convert '{reader.Value}' into a grade."),
+      };
 
     // If the value is not valid, throw an exception.
-    throw new JsonSerializationException($"Unable to convert '{reader.Value}' into a string array.");
+    throw new JsonSerializationException($"Unable to convert '{reader.Value}' ({reader.TokenType}) into a grade.");
   }
 
   public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
   {
-    // If the value is a string array, join it to a string.
-    if (value is string[] arr)
-      writer.WriteValue(string.Join(' ', arr));
-
-    // If the value is not valid, throw an exception.
-    else
-      throw new JsonSerializationException($"Unexpected type {value?.GetType().Name}.");
+    throw new NotImplementedException();
   }
 }

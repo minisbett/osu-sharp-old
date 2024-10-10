@@ -2,12 +2,11 @@
 
 namespace OsuSharp.Enums;
 
-
 /// <summary>
 /// An enum containing the type of beatmap packs that exist.
 /// <br/><br/>
 /// API docs: <a href="https://osu.ppy.sh/docs/index.html#beatmappacktype"/><br/>
-/// Source: <a href="https://github.com/ppy/osu-web/blob/master/app/Models/BeatmapPack.php#L36"/>
+/// Source: <a href="https://github.com/ppy/osu-web/blob/master/app/Models/BeatmapPack.php"/>
 /// </summary>
 public enum BeatmapPackType
 {
@@ -18,7 +17,7 @@ public enum BeatmapPackType
   Standard,
 
   /// <summary>
-  /// Targets all beatmap packs including featured artists. (F")
+  /// Targets all beatmap packs including featured artists. ("F")
   /// </summary>
   [Description("featured")]
   Featured,

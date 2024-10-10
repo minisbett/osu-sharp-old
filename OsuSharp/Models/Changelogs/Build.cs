@@ -12,8 +12,6 @@ namespace OsuSharp.Models.Changelogs;
 /// </summary>
 public class Build
 {
-  // TODO: does the "versions" attribute still exist? its not being returned
-
   /// <summary>
   /// The datetime at which this build was created.
   /// </summary>

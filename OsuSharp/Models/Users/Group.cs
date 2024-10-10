@@ -30,7 +30,7 @@ public class Group
   public bool HasListing { get; private set; }
 
   /// <summary>
-  /// TODO: what is this?
+  /// Bool whether this group is specific to certain rulesets. If <see langword="false"/>, <see cref="PlayModes"/> will be null.
   /// </summary>
   [JsonProperty("has_playmodes")]
   public bool HasPlaymodes { get; private set; }
@@ -67,7 +67,8 @@ public class Group
 
   /// <summary>
   /// The rulesets this group is specific to.
+  /// This will be null if <see cref="HasPlaymodes"/> is <see langword="false"/>, and the group therefore counts for all rulesets.
   /// </summary>
   [JsonProperty("playmodes")]
-  public Ruleset[] PlayModes { get; private set; } = default!;
+  public Ruleset[]? PlayModes { get; private set; } = default!;
 }

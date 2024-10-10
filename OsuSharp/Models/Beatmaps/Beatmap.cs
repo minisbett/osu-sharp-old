@@ -37,7 +37,6 @@ public class Beatmap
   /// The ruleset this beatmap was made for.
   /// </summary>
   [JsonProperty("mode")]
-  [JsonConverter(typeof(StringEnumConverter))]
   public Ruleset Ruleset { get; private set; }
 
   /// <summary>
@@ -50,7 +49,6 @@ public class Beatmap
   /// The total length of this beatmap.
   /// </summary>
   [JsonProperty("total_length")]
-  [JsonConverter(typeof(TimeSpanConverter))]
   public TimeSpan TotalLength { get; private set; }
 
   /// <summary>

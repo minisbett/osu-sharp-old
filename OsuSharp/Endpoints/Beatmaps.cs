@@ -86,7 +86,7 @@ public partial class OsuApiClient
   /// <param name="beatmapId">The ID of the beatmap to receive the score of.</param>
   /// <param name="userId">The ID of the user to receive the score of.</param>
   /// <param name="ruleset">Optional. The ruleset in which the score was set.</param>
-  /// <returns>The beatmap user score or null, if the beatmap or user was not found.</returns>
+  /// <returns>The beatmap user scores or null, if the beatmap or user was not found.</returns>
   public async Task<Score[]?> GetUserBeatmapScoresAsync(int beatmapId, int userId, Ruleset? ruleset = null)
   {
     // Send the request and return the score objects.

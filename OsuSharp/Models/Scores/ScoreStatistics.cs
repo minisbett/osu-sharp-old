@@ -29,16 +29,16 @@ public class ScoreStatistics
   public int Count50 { get; private set; }
 
   /// <summary>
-  /// The amount of gekis in this score.
+  /// The amount of gekis in this score. This will be null if the statistic is not relevant for the ruleset.
   /// </summary>
   [JsonProperty("count_geki")]
-  public int CountGeki { get; private set; }
+  public int? CountGeki { get; private set; }
 
   /// <summary>
-  /// The amount of katus in this score.
+  /// The amount of katus in this score. This will be null if the statistic is not relevant for the ruleset.
   /// </summary>
   [JsonProperty("count_katu")]
-  public int CountKatu { get; private set; }
+  public int? CountKatu { get; private set; }
 
   /// <summary>
   /// The amount of misses in this score.

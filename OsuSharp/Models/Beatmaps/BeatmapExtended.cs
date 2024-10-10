@@ -34,12 +34,11 @@ public class BeatmapExtended : Beatmap
 
   /// <summary>
   /// Bool whether this beatmap is converted from a different ruleset or not.
-  /// TODO: Why can this be null? Its not optional
   /// </summary>
   [JsonProperty("convert")]
-  public bool? Convert { get; private set; }
+  public bool IsConverted { get; private set; }
 
-  /// <summary>
+  /// <summary>A
   /// The amount of circles in this beatmap.
   /// </summary>
   [JsonProperty("count_circles")]
@@ -78,7 +77,6 @@ public class BeatmapExtended : Beatmap
   /// The hit length of this beatmap.
   /// </summary>
   [JsonProperty("hit_length")]
-  [JsonConverter(typeof(TimeSpanConverter))]
   public TimeSpan HitLength { get; private set; }
 
   /// <summary>

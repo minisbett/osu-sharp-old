@@ -1,9 +1,4 @@
 ﻿using OsuSharp.Models.Wikis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuSharp;
 

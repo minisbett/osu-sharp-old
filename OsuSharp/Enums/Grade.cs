@@ -3,6 +3,7 @@
 /// <summary>
 /// An enum containing the grades a score can have. (XH, SH, X, S, A, B, C, D)
 /// <br/><br/>
+/// API docs: Not documented, refer to source<br/>
 /// Source: <a href="https://github.com/ppy/osu-web/blob/master/resources/js/interfaces/rank.ts"/>
 /// </summary>
 public enum Grade

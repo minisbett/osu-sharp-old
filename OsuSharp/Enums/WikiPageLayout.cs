@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using OsuSharp.Models.Wikis;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OsuSharp.Models.Wikis;
 
 namespace OsuSharp.Enums;
 

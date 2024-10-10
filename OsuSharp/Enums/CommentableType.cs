@@ -6,7 +6,7 @@ namespace OsuSharp.Enums;
 /// An enum containing the type of commentable objects.
 /// <br/><br/>
 /// API docs: Not documented, refer to source</br>
-/// Source: <a href=""/>
+/// Source: <a href="https://github.com/ppy/osu-web/blob/master/resources/js/notification-maps/url.ts"/>
 /// </summary>
 public enum CommentableType
 {
