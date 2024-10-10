@@ -32,7 +32,7 @@ public partial class OsuApiClient
   /// Returns the user ranking by performance (PP) or score, optionally filtered by country.
   /// </summary>
   /// <param name="page">Optional. The page.</param>
-  /// <param name="type">The type of ranking. Defaults to Performance ranking.</param>
+  /// <param name="type">The type of ranking. Defaults to <see cref="RankingType.Performance"/> ranking.</param>
   /// <param name="ruleset">The ruleset for the ranking. Defaults to osu!standard.</param>
   /// <param name="country">Optional. The targetted country. Only available for <see cref="RankingType.Performance"/>.</param>
   /// <param name="spotlight">Optional. The ID for the spotlight, latest by default. Only available for <see cref="RankingType.Charts"/>.</param>
