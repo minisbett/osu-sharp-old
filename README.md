@@ -1,5 +1,5 @@
 > [!CAUTION]
-> This library is outdated and no longer maintained. It has been fully rewritten and can be found here: [minisbett/osu-sharp](https://github.com/minisbett/osu-sharp) 
+> This library is outdated and no longer maintained. It has been fully rewritten and can be found here: [minisbett/osu.NET](https://github.com/minisbett/osu.NET) 
 
 <div align="center">
 
